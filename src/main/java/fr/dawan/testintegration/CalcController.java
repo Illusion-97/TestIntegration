@@ -7,4 +7,8 @@ public class CalcController {
     public String index() {
         return "Welcome";
     }
+
+    public int divide(int a, int b) {
+        return a / b;
+    }
 }

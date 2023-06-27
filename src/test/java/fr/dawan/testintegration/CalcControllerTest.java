@@ -15,4 +15,9 @@ class CalcControllerTest {
     void index() {
         assertEquals("Welcome", controller.index());
     }
+
+    @Test
+    void divide() {
+        assertEquals(1, controller.divide(1,1));
+    }
 }
