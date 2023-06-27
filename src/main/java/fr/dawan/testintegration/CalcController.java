@@ -11,6 +11,6 @@ public class CalcController {
     }
 
     public int divide(int a, int b) {
-        return a / b;
+        return b == 0 ? 0 : a / b;
     }
 }
