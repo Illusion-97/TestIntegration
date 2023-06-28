@@ -18,6 +18,13 @@ public class CalcController {
     }
 
     public int divide(int a, int b) {
+
+        boolean test = a == 0
+            ? b == 0
+                ? true
+                : false
+            : false;
+
         return b == 0 ? 0 : a / b;
     }
 
