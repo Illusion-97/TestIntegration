@@ -1,10 +1,11 @@
 package fr.dawan.testintegration;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +14,8 @@ class CalcControllerTest {
     @Autowired
     CalcController controller;
 
+    @MockBean
+    Randomizer randomizer;
     @Test
     void givenOneAndOne_whenDivide_thenReturnOne() {
         // Arrange (Déclaration de paramètres)
@@ -81,4 +84,73 @@ class CalcControllerTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void givenNegativeSeven_whenAddToRandom_thenReturnZero() {
+        int a = -7, expected = 0;
+
+        // Simule l'appel d'une fonction afin de fournir la réponse désirée
+        Mockito.when(randomizer.getRandomInt()).thenReturn(7);
+
+        int result = controller.addToRandom(a);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void givenThousandAndOne_whenAddToRandom_thenReturnThousand() {
+        int a = 1001, expected = 1000;
+
+        int result = controller.addToRandom(a);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void givenNegativeTen_whenAddToRandom_thenReturnZero() {
+        int a = -10, expected = 0;
+
+        int result = controller.addToRandom(a);
+
+        assertEquals(expected, result);
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        System.out.println("\u001B[36mCalcControllerTest.beforeEach\u001B[0m");
+        Mockito.when(randomizer.getRandomInt()).thenReturn(0);
+    }
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("\u001B[36mCalcControllerTest.beforeAll\u001B[0m");
+    }
+
+    @AfterEach
+    void afterEach() {
+        System.out.println("\u001B[36mCalcControllerTest.afterEach\u001B[0m");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("\u001B[36mCalcControllerTest.afterAll\u001B[0m");
+    }
+
+
+    @Test
+    @Disabled("Unreachable")
+    void givenThousand_whenAddToRandom_thenThrowException() {
+        int a = 1000;
+        Class<? extends Throwable> expected = Exception.class;
+        Mockito.when(randomizer.getRandomInt()).thenReturn(7);
+        assertThrows(expected, () -> controller.addToRandom(a));
+    }
+
+    @Test
+    @Disabled("Unreachable")
+    void givenZero_whenAddToRandom_thenThrowException() {
+        int a = 0;
+        Class<? extends Throwable> expected = Exception.class;
+        Mockito.when(randomizer.getRandomInt()).thenReturn(0);
+        assertThrows(expected, () -> controller.addToRandom(a));
+    }
 }
